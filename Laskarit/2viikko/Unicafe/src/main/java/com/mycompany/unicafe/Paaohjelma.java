@@ -6,6 +6,8 @@ public class Paaohjelma {
         Kassapaate unicafeExactum = new Kassapaate();
         Maksukortti kortti = new Maksukortti(10000);
         
+        System.out.println(unicafeExactum.toString());
+        
         unicafeExactum.syoEdullisesti(kortti);
         
         System.out.println( unicafeExactum.edullisiaLounaitaMyyty() );
