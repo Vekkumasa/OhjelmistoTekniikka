@@ -1,17 +1,17 @@
-#Määrittely
+# Määrittely
 
-###Projektin tarkoitus
+### Projektin tarkoitus
 Kyseessä on opintojen seurantajärjestelmä. Opiskelija voi itse luoda henkilökohtaisen opintosuunnitelman
 eli hopsin. Hopsia voi muokata koska vain ja opiskelija voi tehdä myös useamman hopsin halutessaan.
 Kurssit merkitään itse manuaalisesti suoritetuiksi, keskeytyneiksi tai hylätyiksi ja ne talletetaan tietokantaan.
 Sovellus laskee suoritettujen opintopisteiden määrän ja suoritusten keskiarvon.
 
-###Käyttöliittymä
+### Käyttöliittymä
 Sovellukseen kirjaudutaan omilla tunnuksilla, sovelluksessa on vain yhtä käyttäjätyyppiä. 
 Kirjautumisen jälkeen aloitusruudulla on painikkeet hopsin listaamiselle ja kurssien lisäämiselle.
 Käyttöliittymä on graafinen eikä muita käyttöliittymiä ole.
 
-###Toiminnallisuudet
+### Toiminnallisuudet
 * Uuden käyttäjän luominen
 * Kirjautuminen sovellukseen omilla tunnuksilla
 * Mahdollisuus oman hopsin luomiseen
