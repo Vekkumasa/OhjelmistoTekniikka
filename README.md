@@ -14,8 +14,12 @@ Sovellus laskee suoritettujen opintopisteiden määrän ja suoritusten keskiarvo
 
 ##### Testaus
 
-Testit suoritetaan komennolla 
+Testit suoritetaan komennolla
+ 
 `mvn test`
+
 Testikattavuus raportin saa komennolla
+
 `mvn jacoco:report`
+
 Kattavuusraporttia voi tarkastella selaimella target/site/jacoco/index.html
