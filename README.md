@@ -12,6 +12,8 @@ Sovellus laskee suoritettujen opintopisteiden määrän ja suoritusten keskiarvo
 
 ### Komentorivitoiminnot
 
+Sovellus käynnistetään komentoriviltä komennolla:. mvn compile exec:java -Dexec.mainClass=OpintojenSeurantaJarjestelma.Main
+
 ##### Testaus
 
 Testit suoritetaan komennolla
@@ -23,3 +25,11 @@ Testikattavuus raportin saa komennolla
 `mvn jacoco:report`
 
 Kattavuusraporttia voi tarkastella selaimella target/site/jacoco/index.html
+
+##### Checkstyle
+
+Tarkistukset suoritetaan komennolla
+
+`mvn jxr:jxr checkstyle:checkstyle`
+
+Virheilmoitukset voi tarkistaa avaamalla tiedoston target/site/checkstyle.html

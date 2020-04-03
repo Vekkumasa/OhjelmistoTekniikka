@@ -45,6 +45,10 @@ public class User {
         }
     }
     
+    public ArrayList getList() {
+        return this.credits;
+    }
+    
     public void getCredits() {
         for (int i = 0; i < this.credits.size(); i++) {
             System.out.println(this.credits.get(i));
