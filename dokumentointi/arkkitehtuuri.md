@@ -2,9 +2,9 @@
 
 #### Rakenne
 
-Ohjelmassa on kolmitasoinen pakkausrakenne
 ![Image of pakkages](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/kuvat/Pakkauskaavio.png)
 
+Ohjelmassa on kolmitasoinen pakkausrakenne
 
 ### Käyttöliittymä
 
@@ -18,8 +18,7 @@ Sovelluksessa on vain yksi mahdollinen käyttäjätyyppi.
 
 
 ### Sovelluslogiikka
-![Image of classes] (https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/kuvat/Luokkakaavio.png)
-
+![Image of classes](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/kuvat/Luokkakaavio.png)
 
 
 ### Tietojen pysyväistallennus
