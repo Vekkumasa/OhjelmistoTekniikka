@@ -10,6 +10,8 @@ Sovellus laskee suoritettujen opintopisteiden määrän ja suoritusten keskiarvo
 
 [Työaikakirjanpito](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/kirjanpito.md)
 
+[Arkkitehtuuri](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/arkkitehtuuri.md)
+
 ### Komentorivitoiminnot
 
 Sovellus käynnistetään komentoriviltä komennolla:. mvn compile exec:java -Dexec.mainClass=OpintojenSeurantaJarjestelma.Main
