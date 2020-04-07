@@ -34,7 +34,6 @@ public class ui extends Application {
     private Scene newUserScene;
     private Scene loginScene;
     
-    private User testUser;
     private VBox vboxCourses;
     
     @Override
@@ -53,7 +52,7 @@ public class ui extends Application {
     public void redrawList() {
         vboxCourses.getChildren().clear();
         
-        ArrayList<Course> courses = testUser.getList();
+        ArrayList<Course> courses = service.getUser().getList();
         for (int i = 0; i < courses.size(); i++) {
             System.out.println(i);
             Course course = courses.get(i);
@@ -64,11 +63,13 @@ public class ui extends Application {
     @Override
     public void start(Stage window) {  
         
-        testUser = new User("Testi", "Testi");
-        Course testCourse = new Course("OHTE" , 5);
-        testUser.addCredit(testCourse);
+        //logged user label
+        Label nameLabel = new Label();
+        
         // login
+        
         VBox loginPane = new VBox(10);
+        Label errorMessage = new Label();
         HBox usernamePane = new HBox(10);
         HBox passwordPane = new HBox(10);
         loginPane.setPadding(new Insets(10));
@@ -76,8 +77,7 @@ public class ui extends Application {
         TextField usernameInput = new TextField();
         Label passwordLabel = new Label("password");
         PasswordField passwordInput = new PasswordField();
-        
-        
+              
         usernamePane.getChildren().addAll(usernameLabel, usernameInput);
         passwordPane.getChildren().addAll(passwordLabel, passwordInput);
         
@@ -94,16 +94,18 @@ public class ui extends Application {
             String username = usernameInput.getText();
             String password = passwordInput.getText();
             if (service.logIn(username, password)) {
-                System.out.println("Jepajepa");
+                nameLabel.setText("Logged in as: " + username);
+                window.setScene(mainScene);
             }else {
-                System.out.println("penattaa");
+                errorMessage.setText("Invalid username or password");
+                errorMessage.setTextFill(Color.RED);
             }
             usernameInput.setText("");
             passwordInput.setText("");
-            window.setScene(mainScene);
+            
         });
         
-        loginPane.getChildren().addAll(usernamePane, passwordPane, loginButton, createButton);       
+        loginPane.getChildren().addAll(errorMessage, usernamePane, passwordPane, loginButton, createButton);       
         
         loginScene = new Scene(loginPane, 500, 300);  
         
@@ -157,9 +159,7 @@ public class ui extends Application {
         HBox informationPane = new HBox(10);
         Region menuSpacer = new Region();
         HBox.setHgrow(menuSpacer, Priority.ALWAYS);
-        Label nameLabel = new Label(testUser.getUsername());
-        HBox testCoursePane = new HBox(10);
-        Label course = new Label(testCourse.getCourseName() +" " + testCourse.getCredits());
+        
         Button logoutButton = new Button("Log out");
         
         HBox addCourse = new HBox(10);
@@ -173,18 +173,18 @@ public class ui extends Application {
             String courseToBeAdded = addCourseName.getText();
             int courseAddedCredits = addCourseCredits.getValue();
             Course newCourse = new Course(courseToBeAdded, courseAddedCredits);
-            testUser.addCredit(newCourse);
+            service.getUser().addCredit(newCourse);
             redrawList();
         });
         
         addCourse.getChildren().addAll(addCourseName, addCourseCredits, spacer, addCourseButton);
         informationPane.getChildren().addAll(nameLabel, menuSpacer, logoutButton);
-        testCoursePane.getChildren().addAll(course);
-        mainScenePane.getChildren().addAll(informationPane, testCoursePane, vboxCourses, addCourse);
+        mainScenePane.getChildren().addAll(informationPane, vboxCourses, addCourse);
         
         
         
         logoutButton.setOnAction(e -> {
+            service.logOut();
             window.setScene(loginScene);
         });
         

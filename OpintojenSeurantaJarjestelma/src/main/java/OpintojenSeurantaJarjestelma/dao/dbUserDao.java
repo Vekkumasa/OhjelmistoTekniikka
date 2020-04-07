@@ -12,7 +12,22 @@ public class dbUserDao implements userDao {
     public dbUserDao() throws Exception {
         this.users = new ArrayList<>();
         connection = DriverManager.getConnection("jdbc:h2:./studies.db");
-        String query = "CREATE TABLE IF NOT EXISTS users (name varchar NOT NULL, username varchar NOT NULL, password varchar NOT NULL);";
+        String create = "CREATE TABLE IF NOT EXISTS course "
+                + "(id int NOT NULL AUTO_INCREMENT ,"
+                + "courseName varchar NOT NULL, "
+                + "grade int, "
+                + "completed boolean, "
+                + "canceled boolean, "
+                + "PRIMARY KEY (id))";
+        
+        String query = "CREATE TABLE IF NOT EXISTS users "
+                + "(id int NOT NULL AUTO_INCREMENT ,"
+                + "username varchar NOT NULL, "
+                + "password varchar NOT NULL, "
+                + "courseID int, "
+                + "FOREIGN KEY (courseID) REFERENCES Course(id), "
+                + "PRIMARY KEY (id));";
+        connection.createStatement().execute(create);
         connection.createStatement().execute(query);
     }
     
@@ -45,9 +60,11 @@ public class dbUserDao implements userDao {
             prepared.setString(2, password);
             ResultSet rs = prepared.executeQuery();
             while (rs.next()) {
+                String id = rs.getString("id");
                 String user_name = rs.getString("username");
                 String pass_word = rs.getString("password");
                 if (username.equals(user_name) && password.equals(pass_word)) {
+                    System.out.println("ID: " + id);
                     User user = new User(username, password);
                     return user;
                 }

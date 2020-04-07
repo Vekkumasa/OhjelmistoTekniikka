@@ -44,4 +44,8 @@ public class Service {
         loggedIn = user;
         return true;
     }
+    
+    public void logOut() {
+        this.loggedIn = null;
+    }
 }
