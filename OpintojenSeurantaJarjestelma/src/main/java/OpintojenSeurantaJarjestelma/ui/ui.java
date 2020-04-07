@@ -20,10 +20,15 @@ import javafx.scene.Node;
 
 import OpintojenSeurantaJarjestelma.domain.User;
 import OpintojenSeurantaJarjestelma.domain.Course;
+import OpintojenSeurantaJarjestelma.domain.Service;
+
+import OpintojenSeurantaJarjestelma.dao.dbUserDao;
+
 import java.util.ArrayList;
 
 
 public class ui extends Application {
+    private Service service;
     
     private Scene mainScene;
     private Scene newUserScene;
@@ -31,6 +36,12 @@ public class ui extends Application {
     
     private User testUser;
     private VBox vboxCourses;
+    
+    @Override
+    public void init() throws Exception {
+        dbUserDao UserDao = new dbUserDao();
+        service = new Service(UserDao);
+    }
     
     public Node createCourse(Course course) {
         HBox box = new HBox(10);
@@ -43,7 +54,6 @@ public class ui extends Application {
         vboxCourses.getChildren().clear();
         
         ArrayList<Course> courses = testUser.getList();
-        System.out.println("JEJEJEJE" + courses.size());
         for (int i = 0; i < courses.size(); i++) {
             System.out.println(i);
             Course course = courses.get(i);
@@ -54,7 +64,7 @@ public class ui extends Application {
     @Override
     public void start(Stage window) {  
         
-        testUser = new User("Testi", "Testi", "Testi");
+        testUser = new User("Testi", "Testi");
         Course testCourse = new Course("OHTE" , 5);
         testUser.addCredit(testCourse);
         // login
@@ -81,6 +91,13 @@ public class ui extends Application {
         });
         
         loginButton.setOnAction(e -> {
+            String username = usernameInput.getText();
+            String password = passwordInput.getText();
+            if (service.logIn(username, password)) {
+                System.out.println("Jepajepa");
+            }else {
+                System.out.println("penattaa");
+            }
             usernameInput.setText("");
             passwordInput.setText("");
             window.setScene(mainScene);
@@ -106,7 +123,24 @@ public class ui extends Application {
         newUsernamePane.getChildren().addAll(newUsernameLabel, newUsernameField);
         newPasswordPane.getChildren().addAll(newPasswordLabel, newPasswordField);
         
-        newUserPane.getChildren().addAll(newUsernamePane, newPasswordPane, createUserButton, backToLoginButton);
+        Label newUserMessage = new Label();
+        
+        newUserPane.getChildren().addAll(newUserMessage, newUsernamePane, newPasswordPane, createUserButton, backToLoginButton);
+        
+        
+        
+        createUserButton.setOnAction(e -> {
+            String username = newUsernameField.getText();
+            String password = newPasswordField.getText();
+            
+            if (service.createUser(username, password)) {
+                newUserMessage.setText("Created new user");
+                newUserMessage.setTextFill(Color.GREEN);
+            }else {
+                newUserMessage.setText("ERROR");
+                newUserMessage.setTextFill(Color.RED);
+            }
+        });
         
         backToLoginButton.setOnAction(e -> {
             newUsernameField.setText("");
@@ -123,7 +157,7 @@ public class ui extends Application {
         HBox informationPane = new HBox(10);
         Region menuSpacer = new Region();
         HBox.setHgrow(menuSpacer, Priority.ALWAYS);
-        Label nameLabel = new Label(testUser.getName());
+        Label nameLabel = new Label(testUser.getUsername());
         HBox testCoursePane = new HBox(10);
         Label course = new Label(testCourse.getCourseName() +" " + testCourse.getCredits());
         Button logoutButton = new Button("Log out");

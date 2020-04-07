@@ -3,24 +3,14 @@ package OpintojenSeurantaJarjestelma.domain;
 import java.util.ArrayList;
 
 public class User {
-    private String name;
     private String username;
     private String password;
     private ArrayList<Course> credits;
     
-    public User(String name, String username, String password) {
-        this.name = name;
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.credits = new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getUsername() {
@@ -61,6 +51,6 @@ public class User {
     
     @Override
     public String toString() {
-        return "name: " + this.name + ", username: " + this.username;
+        return "username: " + this.username;
     }
 }

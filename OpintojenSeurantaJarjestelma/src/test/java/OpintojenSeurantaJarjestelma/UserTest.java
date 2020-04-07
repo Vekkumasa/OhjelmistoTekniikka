@@ -19,7 +19,7 @@ public class UserTest {
     @Before
     public void setUp() {
         this.courseArray = new ArrayList<Course>();
-        this.user = new User("name", "username", "password");
+        this.user = new User("username", "password");
     }
     
     @Test
@@ -37,11 +37,6 @@ public class UserTest {
         assertEquals(1, user.sizeOfArray());
     }
     
-    @Test
-    public void nameCanBeChanged() {
-        user.setName("pena");
-        assertEquals("pena", user.getName());
-    }
     
     @Test
     public void usernameCanBeChanged() {
@@ -57,7 +52,7 @@ public class UserTest {
     
     @Test
     public void userToString() {
-        assertEquals("name: name, username: username", user.toString());
+        assertEquals("username: username", user.toString());
     }
     
 }
