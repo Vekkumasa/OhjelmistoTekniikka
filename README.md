@@ -14,7 +14,9 @@ Sovellus laskee suoritettujen opintopisteiden määrän ja suoritusten keskiarvo
 
 ### Komentorivitoiminnot
 
-Sovellus käynnistetään komentoriviltä komennolla:. mvn compile exec:java -Dexec.mainClass=OpintojenSeurantaJarjestelma.Main
+Sovellus käynnistetään komentoriviltä komennolla:
+
+`mvn compile exec:java -Dexec.mainClass=OpintojenSeurantaJarjestelma.Main`
 
 ##### Testaus
 
