@@ -5,30 +5,32 @@ import OpintojenSeurantaJarjestelma.domain.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class dbUserDao implements userDao {
+public class DBUserDao implements UserDao {
     private Connection connection;
     private List<User> users;
     
-    public dbUserDao() throws Exception {
+    public DBUserDao() throws Exception {
         this.users = new ArrayList<>();
         connection = DriverManager.getConnection("jdbc:h2:./studies.db");
-        String create = "CREATE TABLE IF NOT EXISTS course "
+        String create = "CREATE TABLE IF NOT EXISTS courses "
                 + "(id int NOT NULL AUTO_INCREMENT ,"
-                + "courseName varchar NOT NULL, "
+                + "courseName varchar NOT NULL UNIQUE, "
+                + "credits int, "
                 + "grade int, "
+                + "userID int, "
                 + "completed boolean, "
                 + "canceled boolean, "
+                + "FOREIGN KEY (userID) REFERENCES Users(id), "
                 + "PRIMARY KEY (id))";
         
         String query = "CREATE TABLE IF NOT EXISTS users "
                 + "(id int NOT NULL AUTO_INCREMENT ,"
-                + "username varchar NOT NULL, "
+                + "username varchar NOT NULL UNIQUE, "
                 + "password varchar NOT NULL, "
-                + "courseID int, "
-                + "FOREIGN KEY (courseID) REFERENCES Course(id), "
                 + "PRIMARY KEY (id));";
-        connection.createStatement().execute(create);
+        
         connection.createStatement().execute(query);
+        connection.createStatement().execute(create);
     }
     
     public void closeConnection() throws Exception {
@@ -50,9 +52,24 @@ public class dbUserDao implements userDao {
         return user;
     }
     
+    public int getUserId(User user) {
+        String query = "SELECT id FROM Users WHERE username = ?;";
+        int id = -1;
+        try (Statement statement = connection.createStatement()) {
+            PreparedStatement prepared = connection.prepareStatement(query);
+            prepared.setString(1, user.getUsername());
+            ResultSet rs = prepared.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+        }
+        return id;
+    }
+    
     @Override
     public User findByUsername(String username, String password) throws Exception {
-        System.out.println("findbyusername: " + username + " " + password);
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";        
         try (Statement statement = connection.createStatement()) {
             PreparedStatement prepared = connection.prepareStatement(query);
@@ -61,9 +78,9 @@ public class dbUserDao implements userDao {
             ResultSet rs = prepared.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("id");
-                String user_name = rs.getString("username");
-                String pass_word = rs.getString("password");
-                if (username.equals(user_name) && password.equals(pass_word)) {
+                String name = rs.getString("username");
+                String pw = rs.getString("password");
+                if (username.equals(name) && password.equals(pw)) {
                     System.out.println("ID: " + id);
                     User user = new User(username, password);
                     return user;

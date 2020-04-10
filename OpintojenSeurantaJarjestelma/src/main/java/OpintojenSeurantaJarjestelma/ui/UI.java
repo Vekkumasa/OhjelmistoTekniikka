@@ -22,12 +22,14 @@ import OpintojenSeurantaJarjestelma.domain.User;
 import OpintojenSeurantaJarjestelma.domain.Course;
 import OpintojenSeurantaJarjestelma.domain.Service;
 
-import OpintojenSeurantaJarjestelma.dao.dbUserDao;
+import OpintojenSeurantaJarjestelma.dao.DBUserDao;
+import OpintojenSeurantaJarjestelma.dao.DBCourseDao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class ui extends Application {
+public class UI extends Application {
     private Service service;
     
     private Scene mainScene;
@@ -38,8 +40,9 @@ public class ui extends Application {
     
     @Override
     public void init() throws Exception {
-        dbUserDao UserDao = new dbUserDao();
-        service = new Service(UserDao);
+        DBUserDao userDao = new DBUserDao();
+        DBCourseDao courseDao = new DBCourseDao(userDao);
+        service = new Service(userDao, courseDao);
     }
     
     public Node createCourse(Course course) {
@@ -52,7 +55,7 @@ public class ui extends Application {
     public void redrawList() {
         vboxCourses.getChildren().clear();
         
-        ArrayList<Course> courses = service.getUser().getList();
+        List<Course> courses = service.getCourses(service.getUser());
         for (int i = 0; i < courses.size(); i++) {
             System.out.println(i);
             Course course = courses.get(i);
@@ -84,7 +87,7 @@ public class ui extends Application {
         Button loginButton = new Button("login");
         Button createButton = new Button("create new user");
         
-        createButton.setOnAction(e ->{
+        createButton.setOnAction(e -> {
             usernameInput.setText("");
             passwordInput.setText("");
             window.setScene(newUserScene);
@@ -95,8 +98,9 @@ public class ui extends Application {
             String password = passwordInput.getText();
             if (service.logIn(username, password)) {
                 nameLabel.setText("Logged in as: " + username);
+                redrawList();
                 window.setScene(mainScene);
-            }else {
+            } else {
                 errorMessage.setText("Invalid username or password");
                 errorMessage.setTextFill(Color.RED);
             }
@@ -138,7 +142,7 @@ public class ui extends Application {
             if (service.createUser(username, password)) {
                 newUserMessage.setText("Created new user");
                 newUserMessage.setTextFill(Color.GREEN);
-            }else {
+            } else {
                 newUserMessage.setText("ERROR");
                 newUserMessage.setTextFill(Color.RED);
             }
@@ -147,6 +151,7 @@ public class ui extends Application {
         backToLoginButton.setOnAction(e -> {
             newUsernameField.setText("");
             newPasswordField.setText("");
+            newUserMessage.setText("");
             window.setScene(loginScene);
         });
         
@@ -172,8 +177,7 @@ public class ui extends Application {
         addCourseButton.setOnAction(e -> {
             String courseToBeAdded = addCourseName.getText();
             int courseAddedCredits = addCourseCredits.getValue();
-            Course newCourse = new Course(courseToBeAdded, courseAddedCredits);
-            service.getUser().addCredit(newCourse);
+            service.createCourse(courseToBeAdded, courseAddedCredits, service.getUser());
             redrawList();
         });
         

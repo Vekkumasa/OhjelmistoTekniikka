@@ -1,10 +1,10 @@
 package OpintojenSeurantaJarjestelma;
 
 import OpintojenSeurantaJarjestelma.domain.*;
-import OpintojenSeurantaJarjestelma.ui.ui;
+import OpintojenSeurantaJarjestelma.ui.UI;
 
 public class Main {
     public static void main(String[] args) {
-        ui.main(args);
+        UI.main(args);
     }
 }

@@ -23,14 +23,14 @@ public class UserTest {
     }
     
     @Test
-    public void creditsCanBeAddedToArray() {
+    public void creditsToArray() {
         Course course = new Course("TESTI", 5);
         user.addCredit(course);
         assertEquals(1, user.sizeOfArray());
     }
     
     @Test
-    public void ifCourseIsAlreadyInArrayItIsNotAdded() {
+    public void noDupesInArray() {
         Course course = new Course("TESTI", 5);
         user.addCredit(course);
         user.addCredit(course);
@@ -39,13 +39,13 @@ public class UserTest {
     
     
     @Test
-    public void usernameCanBeChanged() {
+    public void usernameChangeable() {
         user.setUsername("pena");
         assertEquals("pena", user.getUsername());
     }
     
     @Test
-    public void passwordCanBeChanged() {
+    public void passwordChangeable() {
         user.setPassword("pena");
         assertEquals("pena", user.getPassword());
     }

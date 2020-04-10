@@ -19,37 +19,37 @@ public class CourseTest {
     }
     
     @Test
-    public void courseCanBeSetCompleted() {
+    public void courseSetCompleted() {
         course.setCompleted(true);
         assertTrue(course.isCompleted());
     }
     
     @Test
-    public void courseCanBeSetCanceled() {
+    public void courseSetCanceled() {
         course.setCanceled(true);
         assertTrue(course.isCanceled());
     }
     
     @Test
-    public void courseGradeCanBeSet() {
+    public void gradeCanBeSet() {
         course.setGrade(5);
         assertEquals(5, course.getGrade());
     }
     
     @Test
-    public void courseCreditsCanBeSet() {
+    public void creditsCanBeSet() {
         course.setCredits(8);
         assertEquals(8, course.getCredits());
     }
     
     @Test
-    public void courseNameCanBeChanged() {
+    public void nameChanged() {
         course.setCourseName("OHTU");
         assertEquals("OHTU", course.getCourseName());
     }
     
     @Test
-    public void toStringIsPrintable() {
+    public void toStringPrint() {
         assertEquals("OHTE: 5 credits", course.toString());
     }
 }

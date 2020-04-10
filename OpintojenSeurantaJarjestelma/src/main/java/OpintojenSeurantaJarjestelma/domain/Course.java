@@ -10,6 +10,7 @@ public class Course {
     public Course(String courseName, int credits) {
         this.courseName = courseName;
         this.credits = credits;
+        this.grade = -1;
         this.completed = false;
         this.canceled = false;
     }
