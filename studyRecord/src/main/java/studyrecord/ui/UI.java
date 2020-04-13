@@ -1,4 +1,4 @@
-package OpintojenSeurantaJarjestelma.ui;
+package studyrecord.ui;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -18,12 +18,12 @@ import com.sun.javafx.scene.control.IntegerField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.Node;
 
-import OpintojenSeurantaJarjestelma.domain.User;
-import OpintojenSeurantaJarjestelma.domain.Course;
-import OpintojenSeurantaJarjestelma.domain.Service;
+import studyrecord.domain.User;
+import studyrecord.domain.Course;
+import studyrecord.domain.Service;
 
-import OpintojenSeurantaJarjestelma.dao.DBUserDao;
-import OpintojenSeurantaJarjestelma.dao.DBCourseDao;
+import studyrecord.dao.DBUserDao;
+import studyrecord.dao.DBCourseDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,30 +37,57 @@ public class UI extends Application {
     private Scene loginScene;
     
     private VBox vboxCourses;
+    private Label dataLabel;
+    
+    private int totalCredits;
+    private double average;
     
     @Override
     public void init() throws Exception {
         DBUserDao userDao = new DBUserDao();
         DBCourseDao courseDao = new DBCourseDao(userDao);
         service = new Service(userDao, courseDao);
+        dataLabel = new Label("");
     }
     
     public Node createCourse(Course course) {
-        HBox box = new HBox(10);
         Label label = new Label(course.getCourseName() + " " + course.getCredits());
-        box.getChildren().add(label);
+        HBox box = new HBox(10);
+        if (course.isCompleted()) {
+            label.setText(course.getCourseName() + " " + course.getCredits() + " Completed with grade: " + course.getGrade());
+        } else if (course.isCanceled()) {
+            label.setText(course.getCourseName() + " " + course.getCredits() + " canceled");;
+        }
+        Region spacer = new Region();
+        IntegerField infi = new IntegerField();
+        Button button = new Button("Set completed");
+        box.setHgrow(spacer, Priority.ALWAYS);
+        box.getChildren().addAll(label, spacer, infi, button);
+        button.setOnAction(e -> {
+            service.setComplete(course, infi.getValue(), service.getUser());
+            redrawList();
+        });
         return box;
     }
     
     public void redrawList() {
         vboxCourses.getChildren().clear();
-        
+        totalCredits = 0;
+        double count = 0;
+        double total = 0;
+        average = 0;
         List<Course> courses = service.getCourses(service.getUser());
         for (int i = 0; i < courses.size(); i++) {
-            System.out.println(i);
             Course course = courses.get(i);
+            totalCredits += course.getCredits();
+            if (course.isCompleted()) {
+                total += course.getGrade();
+                count++;
+            }
             vboxCourses.getChildren().add(createCourse(course));
         }
+        average = total / count;
+        dataLabel.setText("Total credits: " + totalCredits + " Average: " + average);
     }
     
     @Override
@@ -69,7 +96,7 @@ public class UI extends Application {
         //logged user label
         Label nameLabel = new Label();
         
-        // login
+        // login scene
         
         VBox loginPane = new VBox(10);
         Label errorMessage = new Label();
@@ -113,7 +140,7 @@ public class UI extends Application {
         
         loginScene = new Scene(loginPane, 500, 300);  
         
-        // newUser
+        // newUser scene
         
         VBox newUserPane = new VBox(10);
         HBox newUsernamePane = new HBox(10);
@@ -133,7 +160,7 @@ public class UI extends Application {
         
         newUserPane.getChildren().addAll(newUserMessage, newUsernamePane, newPasswordPane, createUserButton, backToLoginButton);
         
-        
+        // Create user
         
         createUserButton.setOnAction(e -> {
             String username = newUsernameField.getText();
@@ -165,6 +192,8 @@ public class UI extends Application {
         Region menuSpacer = new Region();
         HBox.setHgrow(menuSpacer, Priority.ALWAYS);
         
+        HBox hopsData = new HBox(10);
+        
         Button logoutButton = new Button("Log out");
         
         HBox addCourse = new HBox(10);
@@ -181,11 +210,11 @@ public class UI extends Application {
             redrawList();
         });
         
+        hopsData.getChildren().addAll(dataLabel);
         addCourse.getChildren().addAll(addCourseName, addCourseCredits, spacer, addCourseButton);
         informationPane.getChildren().addAll(nameLabel, menuSpacer, logoutButton);
-        mainScenePane.getChildren().addAll(informationPane, vboxCourses, addCourse);
-        
-        
+        mainScenePane.getChildren().addAll(informationPane, vboxCourses, hopsData, addCourse);
+                
         
         logoutButton.setOnAction(e -> {
             service.logOut();

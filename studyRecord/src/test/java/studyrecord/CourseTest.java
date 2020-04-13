@@ -1,4 +1,4 @@
-package OpintojenSeurantaJarjestelma;
+package studyRecord;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
-import OpintojenSeurantaJarjestelma.domain.Course;
+import studyrecord.domain.Course;
 
 public class CourseTest {
 

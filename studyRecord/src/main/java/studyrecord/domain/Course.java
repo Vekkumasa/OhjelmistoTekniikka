@@ -1,4 +1,4 @@
-package OpintojenSeurantaJarjestelma.domain;
+package studyrecord.domain;
 
 public class Course {
     private String courseName;

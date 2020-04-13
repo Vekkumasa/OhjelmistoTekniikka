@@ -1,4 +1,4 @@
-package OpintojenSeurantaJarjestelma.domain;
+package studyrecord.domain;
 
 import java.util.ArrayList;
 

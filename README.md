@@ -8,6 +8,8 @@ Sovellus laskee suoritettujen opintopisteiden määrän ja suoritusten keskiarvo
 
 ### Dokumentaatio
 
+[Määrittely](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/maarittely.md)
+
 [Työaikakirjanpito](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/kirjanpito.md)
 
 [Arkkitehtuuri](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/arkkitehtuuri.md)

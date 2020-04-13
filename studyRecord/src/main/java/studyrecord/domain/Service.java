@@ -1,8 +1,8 @@
-package OpintojenSeurantaJarjestelma.domain;
+package studyrecord.domain;
 
-import OpintojenSeurantaJarjestelma.dao.UserDao;
-import OpintojenSeurantaJarjestelma.dao.CourseDao;
-import OpintojenSeurantaJarjestelma.domain.User;
+import studyrecord.dao.UserDao;
+import studyrecord.dao.CourseDao;
+import studyrecord.domain.User;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +25,17 @@ public class Service {
         try {
             courseDao.create(course, user);
             System.out.println("ADDED");
+        } catch (Exception error) {
+            System.out.println(error.getMessage());
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean setComplete(Course course, int grade, User user) {
+        
+        try {
+            courseDao.setCompleted(course, grade, user);
         } catch (Exception error) {
             System.out.println(error.getMessage());
             return false;

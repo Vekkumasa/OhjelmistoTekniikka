@@ -1,7 +1,7 @@
-package OpintojenSeurantaJarjestelma.dao;
+package studyrecord.dao;
 
 import java.sql.*;
-import OpintojenSeurantaJarjestelma.domain.User;
+import studyrecord.domain.User;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class DBUserDao implements UserDao {
     
     public DBUserDao() throws Exception {
         this.users = new ArrayList<>();
-        connection = DriverManager.getConnection("jdbc:h2:./studies.db");
+        connection = DriverManager.getConnection("jdbc:h2:./studies");
         String create = "CREATE TABLE IF NOT EXISTS courses "
                 + "(id int NOT NULL AUTO_INCREMENT ,"
                 + "courseName varchar NOT NULL UNIQUE, "
@@ -52,7 +52,8 @@ public class DBUserDao implements UserDao {
         return user;
     }
     
-    public int getUserId(User user) {
+    @Override
+    public int getUserId(User user) throws Exception {
         String query = "SELECT id FROM Users WHERE username = ?;";
         int id = -1;
         try (Statement statement = connection.createStatement()) {

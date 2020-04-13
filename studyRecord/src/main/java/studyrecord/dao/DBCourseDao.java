@@ -1,13 +1,13 @@
-package OpintojenSeurantaJarjestelma.dao;
+package studyrecord.dao;
 
 import java.sql.*;
-import OpintojenSeurantaJarjestelma.domain.Course;
-import OpintojenSeurantaJarjestelma.domain.User;
-import OpintojenSeurantaJarjestelma.dao.DBUserDao;
+import studyrecord.domain.Course;
+import studyrecord.domain.User;
+import studyrecord.dao.DBCourseDao;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBCourseDao implements CourseDao{
+public class DBCourseDao implements CourseDao {
     private Connection connection;
     private List<Course> courses;
     private DBUserDao userDao;
@@ -15,7 +15,7 @@ public class DBCourseDao implements CourseDao{
     public DBCourseDao(DBUserDao userDao) throws Exception {
         this.courses = new ArrayList<Course>();
         this.userDao = userDao;
-        connection = DriverManager.getConnection("jdbc:h2:./studies.db");
+        connection = DriverManager.getConnection("jdbc:h2:./studies");
     }
     
     public void closeConnection() throws Exception {
@@ -52,7 +52,6 @@ public class DBCourseDao implements CourseDao{
             prepared.setInt(1, id);
             ResultSet rs = prepared.executeQuery();
             while (rs.next()) {
-                System.out.println(rs.getString("courseName") + " " + rs.getInt("credits") + " " + rs.getInt("grade") + " " + rs.getBoolean("completed") + " " + rs.getBoolean("canceled"));
                 Course course = new Course(rs.getString("courseName"), rs.getInt("credits"));
                 course.setGrade(rs.getInt("grade"));
                 course.setCompleted(rs.getBoolean("completed"));
@@ -60,9 +59,45 @@ public class DBCourseDao implements CourseDao{
                 courses.add(course);
             }       
         } catch (SQLException error) {
-            System.out.println("täällä");
             System.out.println(error.getMessage());
         }        
         return courses;
     }
+    
+    @Override
+    public Course setCompleted(Course course, int grade, User user) throws Exception {
+        String query = "UPDATE courses SET completed=true, grade = ? WHERE userID = ? AND id = ?";
+        int userId = userDao.getUserId(user);
+        int id = getCourseId(course, user);
+        try (Statement statement = connection.createStatement()) {
+            PreparedStatement prepared = connection.prepareStatement(query);
+            prepared.setInt(1, grade);
+            prepared.setInt(2, userId);
+            prepared.setInt(3, id);
+            prepared.executeUpdate();
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+        }
+        return course;
+    }
+    
+    @Override
+    public int getCourseId(Course course, User user) throws Exception {
+        String query = "SELECT id FROM Courses WHERE courseName = ? AND userID = ?;";
+        int id = -1;
+        int userId = userDao.getUserId(user);
+        try (Statement statement = connection.createStatement()) {
+            PreparedStatement prepared = connection.prepareStatement(query);
+            prepared.setString(1, course.getCourseName());
+            prepared.setInt(2, userId);
+            ResultSet rs = prepared.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+        }
+        return id;
+    }
+
 }
