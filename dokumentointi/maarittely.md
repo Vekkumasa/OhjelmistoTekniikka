@@ -18,7 +18,7 @@ Käyttöliittymä on graafinen eikä muita käyttöliittymiä ole.
   * Hopsia voi muokata myöhemmin tai luoda kokonaan uuden
   * Hopsiin suunnitellun suoritusajankohdan
   * Hopsissa lukee opiskeluoikeusaika ja tutkinnon laajuus, läsnä- ja poissaolo tiedot
-* Merkitä kursseja suoritetuksi, keskeytetyksi tai hylätyksi
+* Merkitä kursseja suoritetuksi tai keskeytetyksi -- Tehty
 * Suoritusten automaattinen seuranta
   * Keskiarvo -- Tehty
   * Opintopisteiden määrä -- Tehty

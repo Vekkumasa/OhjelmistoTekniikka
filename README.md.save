@@ -6,10 +6,6 @@ Hopsia voi muokata koska vain ja opiskelija voi tehdä myös useamman hopsin hal
 Kurssit merkitään itse manuaalisesti suoritetuiksi, keskeytyneiksi tai hylätyiksi ja ne talletetaan tietokantaan. 
 Sovellus laskee suoritettujen opintopisteiden määrän ja suoritusten keskiarvon.
 
-### Releaset
-
-[1. Release](https://github.com/Vekkumasa/OhjelmistoTekniikka/releases/tag/viikko5)
-
 ### Dokumentaatio
 
 [Määrittely](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/maarittely.md)
@@ -24,9 +20,8 @@ Sovellus käynnistetään komentoriviltä komennolla:
 
 `mvn compile exec:java -Dexec.mainClass=OpintojenSeurantaJarjestelma.Main`
 
-Jar tiedoston generointi:
+Jar tiedoston generointi
 
-`mvn package`
 
 ##### Testaus
 
