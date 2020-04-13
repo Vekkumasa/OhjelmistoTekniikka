@@ -5,7 +5,7 @@ Opiskelija voi itse luoda henkilökohtaisen opintosuunnitelman eli hopsin.
 Hopsia voi muokata koska vain ja opiskelija voi tehdä myös useamman hopsin halutessaan.
 Kurssit merkitään itse manuaalisesti suoritetuiksi, keskeytyneiksi tai hylätyiksi ja ne talletetaan tietokantaan. 
 Sovellus laskee suoritettujen opintopisteiden määrän ja suoritusten keskiarvon.
-
+testi
 ### Releaset
 
 [1. Release](https://github.com/Vekkumasa/OhjelmistoTekniikka/releases/tag/viikko5)
