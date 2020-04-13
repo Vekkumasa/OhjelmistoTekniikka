@@ -82,6 +82,20 @@ public class DBCourseDao implements CourseDao {
     }
     
     @Override
+    public Course setCanceled(Course course, User user) throws Exception {
+        String query = "UPDATE courses SET canceled=true WHERE userID = ?";
+        int userId = userDao.getUserId(user);
+        try (Statement statement = connection.createStatement()) {
+            PreparedStatement prepared = connection.prepareStatement(query);
+            prepared.setInt(1, userId);
+            prepared.executeUpdate();
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+        }
+        return course;
+    }
+    
+    @Override
     public int getCourseId(Course course, User user) throws Exception {
         String query = "SELECT id FROM Courses WHERE courseName = ? AND userID = ?;";
         int id = -1;

@@ -13,8 +13,8 @@ public class DBUserDao implements UserDao {
         this.users = new ArrayList<>();
         connection = DriverManager.getConnection("jdbc:h2:./studies");
         String create = "CREATE TABLE IF NOT EXISTS courses "
-                + "(id int NOT NULL AUTO_INCREMENT ,"
-                + "courseName varchar NOT NULL UNIQUE, "
+                + "(id int NOT NULL AUTO_INCREMENT, "
+                + "courseName varchar NOT NULL, "
                 + "credits int, "
                 + "grade int, "
                 + "userID int, "

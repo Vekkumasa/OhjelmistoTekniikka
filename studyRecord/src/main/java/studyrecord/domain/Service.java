@@ -32,6 +32,16 @@ public class Service {
         return true;
     }
     
+    public boolean setCanceled(Course course, User user) {
+        try {
+            courseDao.setCanceled(course, user);
+        } catch (Exception error) {
+            System.out.println(error.getMessage());
+            return false;
+        }
+        return true;
+    }
+    
     public boolean setComplete(Course course, int grade, User user) {
         
         try {

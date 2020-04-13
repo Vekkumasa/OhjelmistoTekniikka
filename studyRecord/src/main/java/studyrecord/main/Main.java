@@ -1,3 +1,5 @@
+package studyrecord.main;
+
 import studyrecord.ui.UI;
 
 public class Main {

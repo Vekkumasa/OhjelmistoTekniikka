@@ -48,7 +48,7 @@
             <version>0.8.3</version>
             <configuration>
                 <excludes>
-                    <exclude>OpintojenSeurantaJarjestelma/ui/*</exclude>
+                    <exclude>studyrecord/ui/*</exclude>
                 </excludes>
             </configuration>
             <executions>
@@ -72,6 +72,26 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jxr-plugin</artifactId>
           <version>2.5</version>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <transformers>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <mainClass>studyrecord.main.Main</mainClass>
+                            </transformer>
+                        </transformers>
+                    </configuration>
+                </execution>
+            </executions>
         </plugin>
         </plugins>
 </build>

@@ -53,21 +53,31 @@ public class UI extends Application {
     public Node createCourse(Course course) {
         Label label = new Label(course.getCourseName() + " " + course.getCredits());
         HBox box = new HBox(10);
-        if (course.isCompleted()) {
-            label.setText(course.getCourseName() + " " + course.getCredits() + " Completed with grade: " + course.getGrade());
-        } else if (course.isCanceled()) {
-            label.setText(course.getCourseName() + " " + course.getCredits() + " canceled");;
-        }
         Region spacer = new Region();
         IntegerField infi = new IntegerField();
-        Button button = new Button("Set completed");
+        Button complete = new Button("Set completed");
         box.setHgrow(spacer, Priority.ALWAYS);
-        box.getChildren().addAll(label, spacer, infi, button);
-        button.setOnAction(e -> {
-            service.setComplete(course, infi.getValue(), service.getUser());
-            redrawList();
-        });
-        return box;
+        Button cancel = new Button("Set Canceled");
+        if (course.isCompleted()) {
+            label.setText(course.getCourseName() + " " + course.getCredits() + " Completed with grade: " + course.getGrade());
+            box.getChildren().addAll(label);
+            return box;
+        } else if (course.isCanceled()) {
+            label.setText(course.getCourseName() + " " + course.getCredits() + " canceled");
+            box.getChildren().addAll(label);
+            return box;
+        } else {        
+            box.getChildren().addAll(label, spacer, infi, complete, cancel);
+            complete.setOnAction(e -> {
+                service.setComplete(course, infi.getValue(), service.getUser());
+                redrawList();
+            });
+            cancel.setOnAction(e -> {
+                service.setCanceled(course, service.getUser());
+                redrawList();
+            });
+            return box;
+        }
     }
     
     public void redrawList() {
