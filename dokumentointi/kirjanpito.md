@@ -7,3 +7,5 @@
 | 1.4     | 1,5     | JavaFX kertausta
 | 1.4     | 3,5     | Alustavan käyttöliittymän teko
 | 3.4     | 3       | Arkkitehtuuri + dokumentointi kuntoon
+| 10.4    | 4       | Tietokanta muutoksia
+| total   | 18      |
