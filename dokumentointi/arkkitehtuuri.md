@@ -20,7 +20,7 @@ Sovelluksessa on vain yksi mahdollinen käyttäjätyyppi.
 ### Sovelluslogiikka
 ![Image of classes](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/kuvat/Luokkakaavio.png)
 
-** Kurssin lisääminen **
+**Kurssin lisääminen**
 
 Hops:n muokkausnäkymässä asetetaan kurssinnimi ja laajuus ja klikataan painiketta.
 Kurssin lisääminen suoritetaan seuraavasti:
