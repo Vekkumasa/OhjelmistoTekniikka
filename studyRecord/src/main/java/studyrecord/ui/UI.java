@@ -44,8 +44,8 @@ public class UI extends Application {
     
     @Override
     public void init() throws Exception {
-        DBUserDao userDao = new DBUserDao();
-        DBCourseDao courseDao = new DBCourseDao(userDao);
+        DBUserDao userDao = new DBUserDao("jdbc:h2:./studies");
+        DBCourseDao courseDao = new DBCourseDao(userDao, "jdbc:h2:./studies");
         service = new Service(userDao, courseDao);
         dataLabel = new Label("");
     }

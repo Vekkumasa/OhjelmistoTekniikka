@@ -32,6 +32,16 @@ public class Service {
         return true;
     }
     
+    public int getUserId(User user) {
+        int id = 0;
+        try {
+            id = userDao.getUserId(user);
+        } catch (Exception error) {
+            System.out.println(error.getMessage());
+        }        
+        return id;
+    }
+    
     public boolean setCanceled(Course course, User user) {
         try {
             courseDao.setCanceled(course, user);

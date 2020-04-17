@@ -9,9 +9,9 @@ public class DBUserDao implements UserDao {
     private Connection connection;
     private List<User> users;
     
-    public DBUserDao() throws Exception {
+    public DBUserDao(String database) throws Exception {
         this.users = new ArrayList<>();
-        connection = DriverManager.getConnection("jdbc:h2:./studies");
+        connection = DriverManager.getConnection(database);
         String create = "CREATE TABLE IF NOT EXISTS courses "
                 + "(id int NOT NULL AUTO_INCREMENT, "
                 + "courseName varchar NOT NULL, "

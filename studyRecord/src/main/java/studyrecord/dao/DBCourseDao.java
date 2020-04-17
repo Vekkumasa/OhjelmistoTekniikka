@@ -12,10 +12,10 @@ public class DBCourseDao implements CourseDao {
     private List<Course> courses;
     private DBUserDao userDao;
     
-    public DBCourseDao(DBUserDao userDao) throws Exception {
+    public DBCourseDao(DBUserDao userDao, String database) throws Exception {
         this.courses = new ArrayList<Course>();
         this.userDao = userDao;
-        connection = DriverManager.getConnection("jdbc:h2:./studies");
+        connection = DriverManager.getConnection(database);
     }
     
     public void closeConnection() throws Exception {
