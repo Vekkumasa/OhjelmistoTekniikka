@@ -8,4 +8,6 @@
 | 1.4     | 3,5     | Alustavan käyttöliittymän teko
 | 3.4     | 3       | Arkkitehtuuri + dokumentointi kuntoon
 | 10.4    | 4       | Tietokanta muutoksia
-| total   | 18      |
+| 16.4    | 3       | Toiminnallisuuden lisäyksiä
+| 17.4    | 6       | Tietokanta testit
+| total   | 24      |

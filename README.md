@@ -22,7 +22,7 @@ Sovellus laskee suoritettujen opintopisteiden määrän ja suoritusten keskiarvo
 
 Sovellus käynnistetään komentoriviltä komennolla:
 
-`mvn compile exec:java -Dexec.mainClass=OpintojenSeurantaJarjestelma.Main`
+`mvn compile exec:java -Dexec.mainClass=studyrecord.main.Main`
 
 Jar tiedoston generointi:
 
