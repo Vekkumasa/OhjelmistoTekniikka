@@ -16,9 +16,22 @@ public class Service {
         this.courseDao = courseDao;
     }
     
+    /**
+     * Retrieves user object who is currently logged in
+     * 
+     * @return Returns currently logged in user. 
+     */
     public User getUser() {
         return this.loggedIn;
     }
+    
+    /**
+     * Method creates a new course and adds it in to a database
+     * @param courseName
+     * @param credits
+     * @param user
+     * @return returns true if course is created, false if not.
+     */
     
     public boolean createCourse(String courseName, int credits, User user) {
         Course course = new Course(courseName, credits);
@@ -32,6 +45,11 @@ public class Service {
         return true;
     }
     
+    /**
+     * Retrieves user's id from database
+     * @param user
+     * @return Returns user:s id retrieved from database
+     */
     public int getUserId(User user) {
         int id = 0;
         try {
@@ -41,6 +59,13 @@ public class Service {
         }        
         return id;
     }
+    
+    /**
+     * Method sets course canceled from a specific user
+     * @param course
+     * @param user
+     * @return Returns true if course is set canceled, false if not.
+     */
     
     public boolean setCanceled(Course course, User user) {
         try {
@@ -52,6 +77,13 @@ public class Service {
         return true;
     }
     
+    /**
+     * Method sets course completed and sets grade for the course from a specific user
+     * @param course
+     * @param grade
+     * @param user
+     * @return Returns true if course is set ccompleted, false if not
+     */
     public boolean setComplete(Course course, int grade, User user) {
         
         try {
@@ -63,6 +95,11 @@ public class Service {
         return true;
     }
     
+    /**
+     * Retrieves all courses from a database
+     * @param user
+     * @return Returns list of courses from database.
+     */ 
     public List<Course> getCourses(User user) {
         try {
             List<Course> test = courseDao.getAll(user);
@@ -74,6 +111,12 @@ public class Service {
         }
     }
     
+    /**
+     * Creates new user and inserts it into a database
+     * @param username
+     * @param password
+     * @return True if user was created succesfully, false if not.
+     */
     public boolean createUser(String username, String password) {
         User newUser = new User(username, password);
         try {
@@ -85,6 +128,12 @@ public class Service {
         return true;
     }
     
+    /**
+     * Sets user as loggedin
+     * @param username
+     * @param password
+     * @return Returns true if user is succesfully logged in, false if not.
+     */
     public boolean logIn(String username, String password) {
         User user = null;
         System.out.println(username);
@@ -102,6 +151,9 @@ public class Service {
         return true;
     }
     
+    /**
+     * Logs out user
+     */
     public void logOut() {
         this.loggedIn = null;
     }

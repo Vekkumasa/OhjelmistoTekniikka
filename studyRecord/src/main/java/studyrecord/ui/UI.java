@@ -14,7 +14,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import com.sun.javafx.scene.control.IntegerField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.Node;
 
@@ -50,11 +49,17 @@ public class UI extends Application {
         dataLabel = new Label("");
     }
     
+    /**
+     * Creates HBox Node, TextField, two Buttons one for setting course completed
+     * and one for setting course canceled, and label with course information
+     * @param course
+     * @return HBox Node
+     */
     public Node createCourse(Course course) {
         Label label = new Label(course.getCourseName() + " " + course.getCredits());
         HBox box = new HBox(10);
         Region spacer = new Region();
-        IntegerField infi = new IntegerField();
+        TextField infi = new TextField();
         Button complete = new Button("Set completed");
         box.setHgrow(spacer, Priority.ALWAYS);
         Button cancel = new Button("Set Canceled");
@@ -80,6 +85,10 @@ public class UI extends Application {
         }
     }
     
+    /**
+     * Clears mainscreen and then retrieves updated courses from a database and
+     * creates mainscreen view again.
+     */
     public void redrawList() {
         vboxCourses.getChildren().clear();
         totalCredits = 0;
@@ -211,7 +220,7 @@ public class UI extends Application {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         TextField addCourseName = new TextField();
-        IntegerField addCourseCredits = new IntegerField();
+        TextField addCourseCredits = new TextField();
         
         addCourseButton.setOnAction(e -> {
             String courseToBeAdded = addCourseName.getText();

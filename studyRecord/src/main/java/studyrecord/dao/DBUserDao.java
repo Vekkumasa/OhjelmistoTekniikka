@@ -39,8 +39,7 @@ public class DBUserDao implements UserDao {
     
     @Override
     public User create(User user) throws Exception {
-        String query = "INSERT INTO users (username, password) values (?, ?);";
-        
+        String query = "INSERT INTO users (username, password) values (?, ?);";       
         try (Statement statement = connection.createStatement()) {
             PreparedStatement prepared = connection.prepareStatement(query);
             prepared.setString(1, user.getUsername());

@@ -17,11 +17,21 @@ public class DBCourseDao implements CourseDao {
         this.userDao = userDao;
         connection = DriverManager.getConnection(database);
     }
-    
+    /**
+     * Closes connection to database
+     * @throws Exception 
+     */
     public void closeConnection() throws Exception {
         connection.close();
     }
     
+    /**
+     * Creates a new course
+     * @param course
+     * @param user
+     * @return
+     * @throws Exception 
+     */
     @Override
     public Course create(Course course, User user) throws Exception {
         String query = "INSERT INTO courses (courseName, credits, grade, completed, canceled, userID) VALUES (?,?,?,?,?,?);";
@@ -41,6 +51,13 @@ public class DBCourseDao implements CourseDao {
         return course;
     }
     
+    /**
+     * Retrieves all courses from a database
+     * @see studyrecord.domain.Service.getCourses()
+     * @param user
+     * @return
+     * @throws Exception 
+     */
     @Override
     public List<Course> getAll(User user) throws Exception {
         ArrayList<Course> courses = new ArrayList<Course>();
