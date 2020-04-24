@@ -234,7 +234,7 @@ public class UI extends Application {
         TextField addCourseCredits = new TextField();
         addCourseCredits.setPromptText("Course grade as Integer");
         VBox addCourseBox = new VBox(10);
-        addCourseBox.getChildren().add(addCourse);
+        addCourseBox.getChildren().addAll(addCourse, hopsData);
         
         addCourseButton.setOnAction(e -> {
             String courseToBeAdded = addCourseName.getText();
