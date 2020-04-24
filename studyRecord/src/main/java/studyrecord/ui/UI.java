@@ -211,8 +211,12 @@ public class UI extends Application {
         
         // Main scene
     
+        ScrollPane scroll = new ScrollPane();       
+        BorderPane mainPane = new BorderPane(scroll);
         vboxCourses = new VBox(10);
-        VBox mainScenePane = new VBox(10);
+        mainScene = new Scene(mainPane, 700, 500);
+        scroll.setContent(vboxCourses);
+        
         HBox informationPane = new HBox(10);
         Region menuSpacer = new Region();
         HBox.setHgrow(menuSpacer, Priority.ALWAYS);
@@ -229,6 +233,8 @@ public class UI extends Application {
         addCourseName.setPromptText("Course name");
         TextField addCourseCredits = new TextField();
         addCourseCredits.setPromptText("Course grade as Integer");
+        VBox addCourseBox = new VBox(10);
+        addCourseBox.getChildren().add(addCourse);
         
         addCourseButton.setOnAction(e -> {
             String courseToBeAdded = addCourseName.getText();
@@ -240,15 +246,13 @@ public class UI extends Application {
         hopsData.getChildren().addAll(dataLabel);
         addCourse.getChildren().addAll(addCourseName, addCourseCredits, spacer, addCourseButton);
         informationPane.getChildren().addAll(nameLabel, menuSpacer, logoutButton);
-        mainScenePane.getChildren().addAll(informationPane, vboxCourses, hopsData, addCourse);
-                
+        mainPane.setTop(informationPane);
+        mainPane.setBottom(addCourseBox);
         
         logoutButton.setOnAction(e -> {
             service.logOut();
             window.setScene(loginScene);
         });
-        
-        mainScene = new Scene(mainScenePane, 500, 300);
         
         window.setTitle("OpintojenSeurantaJarjestelma");
         window.setScene(loginScene);
