@@ -10,4 +10,5 @@
 | 10.4    | 4       | Tietokanta muutoksia
 | 16.4    | 3       | Toiminnallisuuden lisäyksiä
 | 17.4    | 6       | Tietokanta testit
-| total   | 24      |
+| 24.4    | 6       | Kurssien poisto mahdollisuus, javadoc, ulkoasun muutos
+| total   | 30      |
