@@ -36,17 +36,20 @@ public class DBCourseDao implements CourseDao {
     public Course create(Course course, User user) throws Exception {
         String query = "INSERT INTO courses (courseName, credits, grade, completed, canceled, userID) VALUES (?,?,?,?,?,?);";
         int id = userDao.getUserId(user);
-        try (Statement statement = connection.createStatement()) {
-            PreparedStatement prepared = connection.prepareStatement(query);
-            prepared.setString(1, course.getCourseName());
-            prepared.setInt(2, course.getCredits());
-            prepared.setInt(3, 0);
-            prepared.setBoolean(4, false);
-            prepared.setBoolean(5, false);
-            prepared.setInt(6, id);
-            prepared.executeUpdate();
-        } catch (SQLException error) {
-            System.out.println(error.getMessage());
+        int courseId = getCourseId(course, user);
+        if (courseId == -1) {
+            try (Statement statement = connection.createStatement()) {
+                PreparedStatement prepared = connection.prepareStatement(query);
+                prepared.setString(1, course.getCourseName());
+                prepared.setInt(2, course.getCredits());
+                prepared.setInt(3, 0);
+                prepared.setBoolean(4, false);
+                prepared.setBoolean(5, false);
+                prepared.setInt(6, id);
+                prepared.executeUpdate();
+            } catch (SQLException error) {
+                System.out.println(error.getMessage());
+            }
         }
         return course;
     }

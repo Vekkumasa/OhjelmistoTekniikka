@@ -126,8 +126,10 @@ public class UI extends Application {
         loginPane.setPadding(new Insets(10));
         Label usernameLabel = new Label("username");
         TextField usernameInput = new TextField();
+        usernameInput.setPromptText("Username");
         Label passwordLabel = new Label("password");
         PasswordField passwordInput = new PasswordField();
+        passwordInput.setPromptText("Password");
               
         usernamePane.getChildren().addAll(usernameLabel, usernameInput);
         passwordPane.getChildren().addAll(passwordLabel, passwordInput);
@@ -169,7 +171,9 @@ public class UI extends Application {
         Label newUsernameLabel = new Label("username");
         Label newPasswordLabel = new Label("password");
         TextField newUsernameField = new TextField();
+        newUsernameField.setPromptText("Username");
         PasswordField newPasswordField = new PasswordField();
+        newPasswordField.setPromptText("Password");
         
         Button createUserButton = new Button("create user");
         Button backToLoginButton = new Button("Back to login");
@@ -222,7 +226,9 @@ public class UI extends Application {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         TextField addCourseName = new TextField();
+        addCourseName.setPromptText("Course name");
         TextField addCourseCredits = new TextField();
+        addCourseCredits.setPromptText("Course grade as Integer");
         
         addCourseButton.setOnAction(e -> {
             String courseToBeAdded = addCourseName.getText();
