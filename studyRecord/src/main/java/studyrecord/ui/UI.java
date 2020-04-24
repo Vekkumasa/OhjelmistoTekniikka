@@ -14,6 +14,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import com.sun.javafx.scene.control.IntegerField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.Node;
 
@@ -59,7 +60,7 @@ public class UI extends Application {
         Label label = new Label(course.getCourseName() + " " + course.getCredits());
         HBox box = new HBox(10);
         Region spacer = new Region();
-        TextField infi = new TextField();
+        TextField textfield = new TextField();
         Button complete = new Button("Set completed");
         box.setHgrow(spacer, Priority.ALWAYS);
         Button cancel = new Button("Set Canceled");
@@ -72,9 +73,10 @@ public class UI extends Application {
             box.getChildren().addAll(label);
             return box;
         } else {        
-            box.getChildren().addAll(label, spacer, infi, complete, cancel);
+            box.getChildren().addAll(label, spacer, textfield, complete, cancel);            
             complete.setOnAction(e -> {
-                service.setComplete(course, infi.getValue(), service.getUser());
+                int luku = Integer.parseInt(textfield.getText());
+                service.setComplete(course, luku, service.getUser());
                 redrawList();
             });
             cancel.setOnAction(e -> {
@@ -224,7 +226,7 @@ public class UI extends Application {
         
         addCourseButton.setOnAction(e -> {
             String courseToBeAdded = addCourseName.getText();
-            int courseAddedCredits = addCourseCredits.getValue();
+            int courseAddedCredits = Integer.parseInt(addCourseCredits.getText());
             service.createCourse(courseToBeAdded, courseAddedCredits, service.getUser());
             redrawList();
         });
