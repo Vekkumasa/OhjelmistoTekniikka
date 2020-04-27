@@ -11,4 +11,6 @@
 | 16.4    | 3       | Toiminnallisuuden lisäyksiä
 | 17.4    | 6       | Tietokanta testit
 | 24.4    | 6       | Kurssien poisto mahdollisuus, javadoc, ulkoasun muutos
-| total   | 30      |
+| 27.4    | 3       | Vertaisarvio
+| 27.4    | 3       | Testit lisätty, korjauksia käyttöliittymään, duplikaatti mahdollisuus poistettu käyttäjistä
+| total   | 36      |
