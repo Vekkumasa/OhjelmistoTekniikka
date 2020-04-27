@@ -73,6 +73,33 @@ public class DataBaseTest {
     }
     
     @Test
+    public void countsPassedCourseCredits() {
+        service.createCourse("courseName", 5, user);
+        Course courseName = new Course("courseName", 5);
+        service.setComplete(course, 4, user);
+        service.setComplete(courseName, 5, user);
+        assertThat(service.getUserCredits(user), is(10.0));
+    }
+    
+    @Test
+    public void countsPassedCourseAverage() {
+        service.createCourse("courseName", 5, user);
+        Course courseName = new Course("courseName", 5);
+        service.setComplete(course, 3, user);
+        service.setComplete(courseName, 5, user);
+        assertThat(service.getUserAverage(user), is(4.0));
+    }
+    
+    @Test
+    public void deleteCourse() {
+        service.createCourse("courseName", 5, user);
+        Course courseName = new Course("courseName", 5);
+        service.deleteCourse(course, user);
+        List<Course> courses = service.getCourses(user);
+        assertThat(courses.get(0).getCourseName(), is("courseName"));
+    }
+    
+    @Test
     public void courseCanBeSetCanceled() {
         service.setCanceled(course, user);
         List<Course> courses = service.getCourses(user);

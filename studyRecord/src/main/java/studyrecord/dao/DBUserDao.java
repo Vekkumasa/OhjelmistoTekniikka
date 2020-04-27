@@ -7,10 +7,8 @@ import java.util.List;
 
 public class DBUserDao implements UserDao {
     private Connection connection;
-    private List<User> users;
     
     public DBUserDao(String database) throws Exception {
-        this.users = new ArrayList<>();
         connection = DriverManager.getConnection(database);
         String create = "CREATE TABLE IF NOT EXISTS courses "
                 + "(id int NOT NULL AUTO_INCREMENT, "
@@ -38,7 +36,8 @@ public class DBUserDao implements UserDao {
     }
     
     @Override
-    public User create(User user) throws Exception {
+    public boolean create(User user) throws Exception {
+        if (user.getUsername() == "" || user.getUsername() == null) return false;
         String query = "INSERT INTO users (username, password) values (?, ?);";       
         try (Statement statement = connection.createStatement()) {
             PreparedStatement prepared = connection.prepareStatement(query);
@@ -47,8 +46,9 @@ public class DBUserDao implements UserDao {
             prepared.executeUpdate();
         } catch (SQLException error) {
             System.out.println(error.getMessage());
+            return false;
         }
-        return user;
+        return true;
     }
     
     @Override
@@ -81,13 +81,50 @@ public class DBUserDao implements UserDao {
                 String name = rs.getString("username");
                 String pw = rs.getString("password");
                 if (username.equals(name) && password.equals(pw)) {
-                    System.out.println("ID: " + id);
                     User user = new User(username, password);
                     return user;
                 }
             }            
         }       
         return null;
+    }
+    
+    public double getAverage(User user) throws Exception {
+        int id = getUserId(user);
+        ArrayList<Integer> list = new ArrayList();
+        double total = 0;
+        String query = "SELECT grade FROM courses WHERE userID = ? AND completed = true";
+        try (Statement statement = connection.createStatement()) {
+            PreparedStatement prepared = connection.prepareStatement(query);
+            prepared.setInt(1, id);
+            ResultSet rs = prepared.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("grade"));
+            }
+        } catch (Exception error) {
+            System.out.println(error.getMessage());
+        }
+        for (int i = 0; i < list.size(); i++) {
+            total += list.get(i);
+        }
+        return total / list.size();
+    }
+    
+    public double getCredits(User user) throws Exception {
+        int id = getUserId(user);
+        double credits = 0;
+        String query = "SELECT credits FROM courses WHERE userID = ? AND Completed = true";
+        try (Statement statement = connection.createStatement()) {
+            PreparedStatement prepared = connection.prepareStatement(query);
+            prepared.setInt(1, id);
+            ResultSet rs = prepared.executeQuery();
+            while (rs.next()) {
+                credits += rs.getInt("credits");
+            }
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+        }       
+        return credits;
     }
     
     

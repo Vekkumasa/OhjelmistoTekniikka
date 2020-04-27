@@ -46,4 +46,6 @@ public interface CourseDao {
      * @throws Exception 
      */
     int getCourseId(Course course, User user) throws Exception;
+    
+    boolean deleteCourse(Course course, User user) throws Exception;
 }

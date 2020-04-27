@@ -37,7 +37,6 @@ public class Service {
         Course course = new Course(courseName, credits);
         try {
             courseDao.create(course, user);
-            System.out.println("ADDED");
         } catch (Exception error) {
             System.out.println(error.getMessage());
             return false;
@@ -101,14 +100,14 @@ public class Service {
      * @return Returns list of courses from database.
      */ 
     public List<Course> getCourses(User user) {
+        List<Course> list = new ArrayList<>();
         try {
-            List<Course> test = courseDao.getAll(user);
-            System.out.println("Array size " + test.size());
-            return courseDao.getAll(user);
+            list = courseDao.getAll(user);
         } catch (Exception error) {
             System.out.println(error.getMessage());
             return new ArrayList<Course>();
         }
+        return list;
     }
     
     /**
@@ -119,13 +118,43 @@ public class Service {
      */
     public boolean createUser(String username, String password) {
         User newUser = new User(username, password);
+        boolean b = false;
         try {
-            userDao.create(newUser);
+            b = userDao.create(newUser);            
+        } catch (Exception error) {
+            return false;
+        }  
+        return b;
+    }
+    
+    public boolean deleteCourse(Course course, User user) {
+        try {
+            courseDao.deleteCourse(course, user);
         } catch (Exception error) {
             System.out.println(error.getMessage());
             return false;
         }
         return true;
+    }
+    
+    public double getUserAverage(User user) {
+        double avg = 0;
+        try {
+            avg = userDao.getAverage(user);
+        } catch (Exception error) {
+            System.out.println(error.getMessage());
+        }
+        return avg;
+    }
+    
+    public double getUserCredits(User user) {
+        double credits = 0;
+        try {
+            credits = userDao.getCredits(user);
+        } catch (Exception error) {
+            System.out.println(error.getMessage());
+        }
+        return credits;
     }
     
     /**
@@ -136,7 +165,6 @@ public class Service {
      */
     public boolean logIn(String username, String password) {
         User user = null;
-        System.out.println(username);
         try {
             user = userDao.findByUsername(username, password);
         } catch (Exception error) {

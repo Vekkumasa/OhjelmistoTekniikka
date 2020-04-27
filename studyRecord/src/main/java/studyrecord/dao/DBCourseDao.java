@@ -103,11 +103,12 @@ public class DBCourseDao implements CourseDao {
     
     @Override
     public Course setCanceled(Course course, User user) throws Exception {
-        String query = "UPDATE courses SET canceled=true WHERE userID = ?";
+        String query = "UPDATE courses SET canceled=true WHERE userID = ? AND courseName = ?";
         int userId = userDao.getUserId(user);
         try (Statement statement = connection.createStatement()) {
             PreparedStatement prepared = connection.prepareStatement(query);
             prepared.setInt(1, userId);
+            prepared.setString(2, course.getCourseName());
             prepared.executeUpdate();
         } catch (SQLException error) {
             System.out.println(error.getMessage());
@@ -134,4 +135,19 @@ public class DBCourseDao implements CourseDao {
         return id;
     }
 
+    @Override
+    public boolean deleteCourse(Course course, User user) throws Exception {
+        String query = "DELETE FROM courses WHERE courseName = ? AND userID = ?";
+        int id = userDao.getUserId(user);
+        try (Statement statement = connection.createStatement()) {
+            PreparedStatement prepared = connection.prepareStatement(query);
+            prepared.setString(1, course.getCourseName());
+            prepared.setInt(2, id);
+            prepared.executeUpdate();
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+            return false;
+        }
+        return true;
+    }
 }

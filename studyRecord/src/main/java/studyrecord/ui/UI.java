@@ -1,5 +1,7 @@
 package studyrecord.ui;
 
+import java.text.DecimalFormat;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -39,8 +41,7 @@ public class UI extends Application {
     private VBox vboxCourses;
     private Label dataLabel;
     
-    private int totalCredits;
-    private double average;
+    private DecimalFormat df2;
     
     @Override
     public void init() throws Exception {
@@ -48,6 +49,26 @@ public class UI extends Application {
         DBCourseDao courseDao = new DBCourseDao(userDao, "jdbc:h2:./studies");
         service = new Service(userDao, courseDao);
         dataLabel = new Label("");
+        df2 = new DecimalFormat("#.##");
+    }
+    
+    /**
+     * Checks that input in textfield is integer and between min and max value
+     * @param text
+     * @param min
+     * @param max
+     * @return true if text is valid
+     */
+    
+    public boolean isInputValid(TextField text, int min, int max) {
+        boolean b = false;
+        if (!(text.getText() == null || text.getText().length() == 0)) {
+            String valid = text.getText();
+            if (valid.matches("[" + min + "-" + max + "]")) {
+                b = true;
+            }
+        }
+        return b;
     }
     
     /**
@@ -64,27 +85,42 @@ public class UI extends Application {
         Button complete = new Button("Set completed");
         box.setHgrow(spacer, Priority.ALWAYS);
         Button cancel = new Button("Set Canceled");
+        Button delete = new Button("Delete course");
+        Label notification = new Label("");
         if (course.isCompleted()) {
             label.setText(course.getCourseName() + " " + course.getCredits() + " Completed with grade: " + course.getGrade());
-            box.getChildren().addAll(label);
-            return box;
+            box.getChildren().addAll(label, spacer, delete, notification);
+            delete.setOnAction(e -> {
+                service.deleteCourse(course, service.getUser());
+                redrawList();
+            });
         } else if (course.isCanceled()) {
             label.setText(course.getCourseName() + " " + course.getCredits() + " canceled");
-            box.getChildren().addAll(label);
-            return box;
-        } else {        
-            box.getChildren().addAll(label, spacer, textfield, complete, cancel);            
-            complete.setOnAction(e -> {
-                int luku = Integer.parseInt(textfield.getText());
-                service.setComplete(course, luku, service.getUser());
+            box.getChildren().addAll(label, spacer, delete, notification);
+            delete.setOnAction(e -> {
+                service.deleteCourse(course, service.getUser());
                 redrawList();
+
+            });
+        } else {        
+            box.getChildren().addAll(label, spacer, textfield, complete, cancel, notification);            
+            complete.setOnAction(e -> {
+                if (isInputValid(textfield, 1 , 5)) {
+                    int luku = Integer.parseInt(textfield.getText());
+                    service.setComplete(course, luku, service.getUser());
+                    redrawList();
+                } else {
+                    notification.setText("Course grade must be 1-5");
+                    notification.setTextFill(Color.RED);
+                }
+                
             });
             cancel.setOnAction(e -> {
                 service.setCanceled(course, service.getUser());
                 redrawList();
             });
-            return box;
         }
+        return box;
     }
     
     /**
@@ -93,22 +129,14 @@ public class UI extends Application {
      */
     public void redrawList() {
         vboxCourses.getChildren().clear();
-        totalCredits = 0;
-        double count = 0;
-        double total = 0;
-        average = 0;
         List<Course> courses = service.getCourses(service.getUser());
         for (int i = 0; i < courses.size(); i++) {
             Course course = courses.get(i);
-            totalCredits += course.getCredits();
-            if (course.isCompleted()) {
-                total += course.getGrade();
-                count++;
-            }
             vboxCourses.getChildren().add(createCourse(course));
         }
-        average = total / count;
-        dataLabel.setText("Total credits: " + totalCredits + " Average: " + average);
+        double avg = service.getUserAverage(service.getUser());
+        double totalCredits = service.getUserCredits(service.getUser());
+        dataLabel.setText("Total credits: " + totalCredits + " Average: " + df2.format(avg));
     }
     
     @Override
@@ -191,11 +219,17 @@ public class UI extends Application {
             String username = newUsernameField.getText();
             String password = newPasswordField.getText();
             
-            if (service.createUser(username, password)) {
-                newUserMessage.setText("Created new user");
-                newUserMessage.setTextFill(Color.GREEN);
+            if (!(newUsernameField.getText() == null || newUsernameField.getText().length() == 0)) {
+
+                if (service.createUser(username, password)) {
+                    newUserMessage.setText("Created new user");
+                    newUserMessage.setTextFill(Color.GREEN);
+                } else {
+                    newUserMessage.setText("Username is already in use");
+                    newUserMessage.setTextFill(Color.RED);
+                }
             } else {
-                newUserMessage.setText("ERROR");
+                newUserMessage.setText("Username field cant be blank");
                 newUserMessage.setTextFill(Color.RED);
             }
         });
@@ -222,6 +256,7 @@ public class UI extends Application {
         HBox.setHgrow(menuSpacer, Priority.ALWAYS);
         
         HBox hopsData = new HBox(10);
+        Label validationLabel = new Label("");
         
         Button logoutButton = new Button("Log out");
         
@@ -234,12 +269,19 @@ public class UI extends Application {
         TextField addCourseCredits = new TextField();
         addCourseCredits.setPromptText("Course grade as Integer");
         VBox addCourseBox = new VBox(10);
-        addCourseBox.getChildren().addAll(addCourse, hopsData);
+        addCourseBox.getChildren().addAll(addCourse, hopsData, validationLabel);
         
         addCourseButton.setOnAction(e -> {
             String courseToBeAdded = addCourseName.getText();
-            int courseAddedCredits = Integer.parseInt(addCourseCredits.getText());
-            service.createCourse(courseToBeAdded, courseAddedCredits, service.getUser());
+            if (isInputValid(addCourseCredits, 1, 9)) {
+                int courseAddedCredits = Integer.parseInt(addCourseCredits.getText());
+                service.createCourse(courseToBeAdded, courseAddedCredits, service.getUser());
+                redrawList();
+                validationLabel.setText("");
+            } else {
+                validationLabel.setText("credits must be between 1-9");
+                validationLabel.setTextFill(Color.RED);
+            }
             redrawList();
         });
         
@@ -251,10 +293,11 @@ public class UI extends Application {
         
         logoutButton.setOnAction(e -> {
             service.logOut();
+            errorMessage.setText("");
             window.setScene(loginScene);
         });
         
-        window.setTitle("OpintojenSeurantaJarjestelma");
+        window.setTitle("Study Record");
         window.setScene(loginScene);
         window.show();
         

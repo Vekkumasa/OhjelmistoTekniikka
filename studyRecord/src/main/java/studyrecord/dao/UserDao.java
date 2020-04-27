@@ -21,7 +21,7 @@ public interface UserDao {
      * @throws Exception 
      */
     
-    User create(User user) throws Exception;
+    boolean create(User user) throws Exception;
     
     /**
      * Retrieves user id from a specific user
@@ -30,4 +30,20 @@ public interface UserDao {
      * @throws Exception 
      */
     public int getUserId(User user) throws Exception;
+    
+    /**
+     * Counts users average of grades
+     * @param user
+     * @return
+     * @throws Exception 
+     */
+    public double getAverage(User user) throws Exception;
+    
+    /**
+     * Counts users credits from completed courses
+     * @param user
+     * @return
+     * @throws Exception 
+     */
+    public double getCredits(User user) throws Exception;
 }
