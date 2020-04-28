@@ -6,6 +6,7 @@ import studyrecord.domain.User;
 import studyrecord.dao.DBCourseDao;
 import java.util.ArrayList;
 import java.util.List;
+import org.joda.time.DateTime;
 
 public class DBCourseDao implements CourseDao {
     private Connection connection;
@@ -48,7 +49,7 @@ public class DBCourseDao implements CourseDao {
                 prepared.setInt(6, id);
                 prepared.executeUpdate();
             } catch (SQLException error) {
-                System.out.println(error.getMessage());
+                System.out.println("create " + error.getMessage());
             }
         }
         return course;
@@ -65,7 +66,7 @@ public class DBCourseDao implements CourseDao {
     public List<Course> getAll(User user) throws Exception {
         ArrayList<Course> courses = new ArrayList<Course>();
         int id = userDao.getUserId(user);
-        String query = "SELECT courseName, credits, grade, completed, canceled FROM courses WHERE userID = ?;";
+        String query = "SELECT courseName, credits, grade, completed, canceled, completionDate FROM courses WHERE userID = ?;";
         
         try (Statement statement = connection.createStatement()) {
             PreparedStatement prepared = connection.prepareStatement(query);
@@ -75,7 +76,8 @@ public class DBCourseDao implements CourseDao {
                 Course course = new Course(rs.getString("courseName"), rs.getInt("credits"));
                 course.setGrade(rs.getInt("grade"));
                 course.setCompleted(rs.getBoolean("completed"));
-                course.setCanceled(rs.getBoolean("canceled"));   
+                course.setCanceled(rs.getBoolean("canceled"));
+                course.setCompletionDate(new DateTime(System.currentTimeMillis()));
                 courses.add(course);
             }       
         } catch (SQLException error) {

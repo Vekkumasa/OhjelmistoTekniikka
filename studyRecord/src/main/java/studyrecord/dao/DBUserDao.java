@@ -18,6 +18,7 @@ public class DBUserDao implements UserDao {
                 + "userID int, "
                 + "completed boolean, "
                 + "canceled boolean, "
+                + "completionDate timestamp, "
                 + "FOREIGN KEY (userID) REFERENCES Users(id), "
                 + "PRIMARY KEY (id))";
         
@@ -37,7 +38,9 @@ public class DBUserDao implements UserDao {
     
     @Override
     public boolean create(User user) throws Exception {
-        if (user.getUsername() == "" || user.getUsername() == null) return false;
+        if (user.getUsername() == "" || user.getUsername() == null) { 
+            return false;
+        }
         String query = "INSERT INTO users (username, password) values (?, ?);";       
         try (Statement statement = connection.createStatement()) {
             PreparedStatement prepared = connection.prepareStatement(query);

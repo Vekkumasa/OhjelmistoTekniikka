@@ -54,7 +54,7 @@ public class UI extends Application {
         dataLabel = new Label("");
         df2 = new DecimalFormat("#.##");
         bf = new BackgroundFill(Color.ANTIQUEWHITE, new CornerRadii(1),
-         new Insets(0.0,0.0,0.0,0.0));
+         new Insets(0.0, 0.0, 0.0, 0.0));
     }
     
     /**
@@ -95,7 +95,11 @@ public class UI extends Application {
         box.setBackground(new Background(bf));
         
         if (course.isCompleted()) {
-            label.setText(course.getCourseName() + " " + course.getCredits() + " Completed with grade: " + course.getGrade());
+            label.setText(course.getCourseName() + " " + course.getCredits() 
+                    + " Grade: " + course.getGrade() + " Date: " 
+                    + course.getCompletionDate().getDayOfMonth()
+                    + "." + course.getCompletionDate().getMonthOfYear() 
+                    + "." + course.getCompletionDate().getYear());
             label.setTextFill(Color.TEAL);
             box.getChildren().addAll(label, spacer, delete, notification);
             delete.setOnAction(e -> {
@@ -279,7 +283,7 @@ public class UI extends Application {
         TextField addCourseName = new TextField();
         addCourseName.setPromptText("Course name");
         TextField addCourseCredits = new TextField();
-        addCourseCredits.setPromptText("Course grade as Integer");
+        addCourseCredits.setPromptText("Course credits (1-9)");
         VBox addCourseBox = new VBox(10);
         addCourseBox.getChildren().addAll(addCourse, hopsData, validationLabel);
         

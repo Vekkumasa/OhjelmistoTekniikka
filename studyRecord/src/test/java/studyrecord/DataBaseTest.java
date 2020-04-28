@@ -1,6 +1,6 @@
 package studyRecord;
 
-
+import org.joda.time.DateTime;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -43,7 +43,7 @@ public class DataBaseTest {
     
     @Test
     public void userAddedToDatabase() {
-        boolean test = service.createUser("testi", "testi");
+        boolean test = service.createUser("tyyppi", "testi");
         assertThat(test, is(true));
     }
     

@@ -1,11 +1,14 @@
 package studyrecord.domain;
 
+import org.joda.time.DateTime;
+
 public class Course {
     private String courseName;
     private int credits;
     private boolean completed;
     private boolean canceled;
     private int grade;
+    private DateTime completionDate;
     
     public Course(String courseName, int credits) {
         this.courseName = courseName;
@@ -25,6 +28,14 @@ public class Course {
 
     public int getCredits() {
         return credits;
+    }
+    
+    public DateTime getCompletionDate() {
+        return this.completionDate;
+    }
+    
+    public void setCompletionDate(DateTime date) {
+        this.completionDate = date;
     }
 
     public void setCredits(int credits) {
