@@ -65,12 +65,11 @@ public class DBCourseDao implements CourseDao {
     @Override
     public List<Course> getAll(User user) throws Exception {
         ArrayList<Course> courses = new ArrayList<Course>();
-        int id = userDao.getUserId(user);
         String query = "SELECT courseName, credits, grade, completed, canceled, completionDate FROM courses WHERE userID = ?;";
         
         try (Statement statement = connection.createStatement()) {
             PreparedStatement prepared = connection.prepareStatement(query);
-            prepared.setInt(1, id);
+            prepared.setInt(1, userDao.getUserId(user));
             ResultSet rs = prepared.executeQuery();
             while (rs.next()) {
                 Course course = new Course(rs.getString("courseName"), rs.getInt("credits"));
