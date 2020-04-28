@@ -1,3 +1,4 @@
+
 # Työaikakirjanpito
 
 | Päiväys | Aika(h) | Työtehtävät |
@@ -13,4 +14,5 @@
 | 24.4    | 6       | Kurssien poisto mahdollisuus, javadoc, ulkoasun muutos
 | 27.4    | 3       | Vertaisarvio
 | 27.4    | 3       | Testit lisätty, korjauksia käyttöliittymään, duplikaatti mahdollisuus poistettu käyttäjistä
-| total   | 36      |
+| 28.4    | 4       | Joda-time lisätty ja muutettu tietokantaa ja javadoccia korjailtu ym pientä
+| total   | 40      |
