@@ -16,7 +16,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import com.sun.javafx.scene.control.IntegerField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.Node;
 
@@ -29,6 +28,9 @@ import studyrecord.dao.DBCourseDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 
 
 public class UI extends Application {
@@ -42,6 +44,7 @@ public class UI extends Application {
     private Label dataLabel;
     
     private DecimalFormat df2;
+    private BackgroundFill bf;
     
     @Override
     public void init() throws Exception {
@@ -50,6 +53,8 @@ public class UI extends Application {
         service = new Service(userDao, courseDao);
         dataLabel = new Label("");
         df2 = new DecimalFormat("#.##");
+        bf = new BackgroundFill(Color.ANTIQUEWHITE, new CornerRadii(1),
+         new Insets(0.0,0.0,0.0,0.0));
     }
     
     /**
@@ -87,8 +92,11 @@ public class UI extends Application {
         Button cancel = new Button("Set Canceled");
         Button delete = new Button("Delete course");
         Label notification = new Label("");
+        box.setBackground(new Background(bf));
+        
         if (course.isCompleted()) {
             label.setText(course.getCourseName() + " " + course.getCredits() + " Completed with grade: " + course.getGrade());
+            label.setTextFill(Color.TEAL);
             box.getChildren().addAll(label, spacer, delete, notification);
             delete.setOnAction(e -> {
                 service.deleteCourse(course, service.getUser());
@@ -158,7 +166,7 @@ public class UI extends Application {
         Label passwordLabel = new Label("password");
         PasswordField passwordInput = new PasswordField();
         passwordInput.setPromptText("Password");
-              
+        loginPane.setBackground(new Background(bf));
         usernamePane.getChildren().addAll(usernameLabel, usernameInput);
         passwordPane.getChildren().addAll(passwordLabel, passwordInput);
         
@@ -212,7 +220,7 @@ public class UI extends Application {
         Label newUserMessage = new Label();
         
         newUserPane.getChildren().addAll(newUserMessage, newUsernamePane, newPasswordPane, createUserButton, backToLoginButton);
-        
+        newUserPane.setBackground(new Background(bf));
         // Create user
         
         createUserButton.setOnAction(e -> {
@@ -238,6 +246,7 @@ public class UI extends Application {
             newUsernameField.setText("");
             newPasswordField.setText("");
             newUserMessage.setText("");
+            errorMessage.setText("");
             window.setScene(loginScene);
         });
         
@@ -250,6 +259,9 @@ public class UI extends Application {
         vboxCourses = new VBox(10);
         mainScene = new Scene(mainPane, 700, 500);
         scroll.setContent(vboxCourses);
+        
+        scroll.setStyle("-fx-background: rgb(250, 235, 215);\n -fx-background-color: rgb(250, 235, 215)");
+        mainPane.setBackground(new Background(bf));
         
         HBox informationPane = new HBox(10);
         Region menuSpacer = new Region();
