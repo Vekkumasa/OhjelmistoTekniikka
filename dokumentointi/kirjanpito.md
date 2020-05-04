@@ -15,4 +15,5 @@
 | 27.4    | 3       | Vertaisarvio
 | 27.4    | 3       | Testit lisätty, korjauksia käyttöliittymään, duplikaatti mahdollisuus poistettu käyttäjistä
 | 28.4    | 4       | Joda-time lisätty ja muutettu tietokantaa ja javadoccia korjailtu ym pientä
-| total   | 40      |
+| 4.5     | 4       | Dokumentointia ja pientä viilailua sieltä täältä.
+| total   | 44      |

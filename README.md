@@ -47,3 +47,10 @@ Tarkistukset suoritetaan komennolla
 `mvn jxr:jxr checkstyle:checkstyle`
 
 Virheilmoitukset voi tarkistaa avaamalla tiedoston target/site/checkstyle.html
+
+#### JavaDoc
+
+JavaDocin saa generoitua komennolla
+
+`mvn javadoc:javadoc`
+
