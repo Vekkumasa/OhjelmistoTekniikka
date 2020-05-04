@@ -13,8 +13,7 @@ Sovelluksessa on vain yksi mahdollinen käyttäjätyyppi.
 
 - Näkymä käyttäjän kirjautumista varten
 - Näkymä uuden käyttäjän luomista varten
-- Näkymä HOPS:n luomiselle ja tarkastelulle
-  - Mahdollisesti luomiselle ja tarkastelulle tulee omat näkymät
+- Näkymä kurssien luomiselle ja tarkastelulle
 
 
 ### Sovelluslogiikka
@@ -26,6 +25,17 @@ Hops:n muokkausnäkymässä asetetaan kurssinnimi ja laajuus ja klikataan painik
 Kurssin lisääminen suoritetaan seuraavasti:
 ![Image of add course](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/kuvat/Sekvenssikaavio_addCourse.jpg)
 
+
+**Käyttäjän lisääminen**
+
+Uuden käyttäjän luomista varten olevassa näkymässä lisätään kenttiin käyttäjänimi ja salasana ja painetaan
+create user nappia
+
+![Image of create user](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/kuvat/Sekvenssikaavio_createUser.jpg)
+
 ### Tietojen pysyväistallennus
 
-Tiedot tallennetaan tietokantaan ja niitä käsitellään Service-luokan avulla
+Tiedot talletetaan tietokantaan ja siitä pitää huolen DBUserDao ja DBCourseDao luokat.
+Sovellus on toteutettu noudattamalla Data Access Object (DAO) mallia. DBUserDao toteuttaa UserDao rajapinnan ja 
+DBCourseDao toteuttaa CourseDao rajapinnan. Domain paketin Service luokka käsittelee DBUserDao ja DBCourseDao luokkia
+UI paketista käsin.
