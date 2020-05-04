@@ -48,6 +48,19 @@ public class DataBaseTest {
     }
     
     @Test
+    public void emptyCannotBeAddedToDatabase() {
+        boolean test = service.createUser("", "salasana");
+        assertThat(test, is(false));
+    }
+    
+    @Test
+    public void nullCannotBeAddedToDatabase() {
+        String teksti = null;
+        boolean test = service.createUser(teksti, "salasana");
+        assertThat(test, is(false));
+    }
+    
+    @Test
     public void findUserId() {        
         User user = new User("testi","password");
         assertThat(service.getUserId(user), is(1));

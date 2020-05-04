@@ -65,12 +65,18 @@ public class UI extends Application {
      * @return true if text is valid
      */
     
-    public boolean isInputValid(TextField text, int min, int max) {
+    public boolean isInputValid(TextField text, int max) {
         boolean b = false;
         if (!(text.getText() == null || text.getText().length() == 0)) {
             String valid = text.getText();
-            if (valid.matches("[" + min + "-" + max + "]")) {
-                b = true;
+            if (max < 10) {           
+                if (valid.matches("([1-5])")) {
+                    b = true;         
+                }
+            } else {
+                if (valid.matches("([1-9]|[12][0-9]|30)")) {
+                    b = true;
+                }
             }
         }
         return b;
@@ -100,7 +106,6 @@ public class UI extends Application {
                     + course.getCompletionDate().getDayOfMonth()
                     + "." + course.getCompletionDate().getMonthOfYear() 
                     + "." + course.getCompletionDate().getYear());
-            label.setTextFill(Color.TEAL);
             box.getChildren().addAll(label, spacer, delete, notification);
             delete.setOnAction(e -> {
                 service.deleteCourse(course, service.getUser());
@@ -117,7 +122,7 @@ public class UI extends Application {
         } else {        
             box.getChildren().addAll(label, spacer, textfield, complete, cancel, notification);            
             complete.setOnAction(e -> {
-                if (isInputValid(textfield, 1 , 5)) {
+                if (isInputValid(textfield, 5)) {
                     int luku = Integer.parseInt(textfield.getText());
                     service.setComplete(course, luku, service.getUser());
                     redrawList();
@@ -283,19 +288,19 @@ public class UI extends Application {
         TextField addCourseName = new TextField();
         addCourseName.setPromptText("Course name");
         TextField addCourseCredits = new TextField();
-        addCourseCredits.setPromptText("Course credits (1-9)");
+        addCourseCredits.setPromptText("Course credits (1-30)");
         VBox addCourseBox = new VBox(10);
         addCourseBox.getChildren().addAll(addCourse, hopsData, validationLabel);
         
         addCourseButton.setOnAction(e -> {
             String courseToBeAdded = addCourseName.getText();
-            if (isInputValid(addCourseCredits, 1, 9)) {
+            if (isInputValid(addCourseCredits, 30)) {
                 int courseAddedCredits = Integer.parseInt(addCourseCredits.getText());
                 service.createCourse(courseToBeAdded, courseAddedCredits, service.getUser());
                 redrawList();
                 validationLabel.setText("");
             } else {
-                validationLabel.setText("credits must be between 1-9");
+                validationLabel.setText("credits must be between 1-30");
                 validationLabel.setTextFill(Color.RED);
             }
             redrawList();

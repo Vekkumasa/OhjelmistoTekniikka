@@ -22,21 +22,6 @@ public class UserTest {
         this.user = new User("username", "password");
     }
     
-    @Test
-    public void creditsToArray() {
-        Course course = new Course("TESTI", 5);
-        user.addCredit(course);
-        assertEquals(1, user.sizeOfArray());
-    }
-    
-    @Test
-    public void noDupesInArray() {
-        Course course = new Course("TESTI", 5);
-        user.addCredit(course);
-        user.addCredit(course);
-        assertEquals(1, user.sizeOfArray());
-    }
-    
     
     @Test
     public void usernameChangeable() {
