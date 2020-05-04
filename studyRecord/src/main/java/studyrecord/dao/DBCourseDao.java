@@ -85,6 +85,14 @@ public class DBCourseDao implements CourseDao {
         return courses;
     }
     
+    /**
+     * Sets course as completed
+     * @param course
+     * @param grade
+     * @param user
+     * @return
+     * @throws Exception 
+     */
     @Override
     public Course setCompleted(Course course, int grade, User user) throws Exception {
         String query = "UPDATE courses SET completed=true, grade = ? WHERE userID = ? AND id = ?";
@@ -102,6 +110,13 @@ public class DBCourseDao implements CourseDao {
         return course;
     }
     
+    /**
+     * Sets cource canceled
+     * @param course
+     * @param user
+     * @return
+     * @throws Exception 
+     */
     @Override
     public Course setCanceled(Course course, User user) throws Exception {
         String query = "UPDATE courses SET canceled=true WHERE userID = ? AND courseName = ?";
@@ -117,6 +132,13 @@ public class DBCourseDao implements CourseDao {
         return course;
     }
     
+    /**
+     * Finds courses primary key from database
+     * @param course
+     * @param user
+     * @return
+     * @throws Exception 
+     */
     @Override
     public int getCourseId(Course course, User user) throws Exception {
         String query = "SELECT id FROM Courses WHERE courseName = ? AND userID = ?;";
@@ -136,6 +158,13 @@ public class DBCourseDao implements CourseDao {
         return id;
     }
 
+    /**
+     * Deletes course from database
+     * @param course
+     * @param user
+     * @return
+     * @throws Exception 
+     */
     @Override
     public boolean deleteCourse(Course course, User user) throws Exception {
         String query = "DELETE FROM courses WHERE courseName = ? AND userID = ?";

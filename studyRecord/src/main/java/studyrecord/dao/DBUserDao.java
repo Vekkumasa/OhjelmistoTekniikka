@@ -8,6 +8,11 @@ import java.util.List;
 public class DBUserDao implements UserDao {
     private Connection connection;
     
+    /**
+     * Creates connection to database and creates database tables
+     * @param database
+     * @throws Exception 
+     */
     public DBUserDao(String database) throws Exception {
         connection = DriverManager.getConnection(database);
         String create = "CREATE TABLE IF NOT EXISTS courses "
@@ -32,10 +37,20 @@ public class DBUserDao implements UserDao {
         connection.createStatement().execute(create);
     }
     
+    /**
+     * Closes connection to database
+     * @throws Exception 
+     */
     public void closeConnection() throws Exception {
         connection.close();
     }
     
+    /**
+     * Creates new user. Username must be at least 1 char long, password may be empty
+     * @param user
+     * @return
+     * @throws Exception 
+     */
     @Override
     public boolean create(User user) throws Exception {
         if (user.getUsername() == "" || user.getUsername() == null) { 
@@ -54,6 +69,12 @@ public class DBUserDao implements UserDao {
         return true;
     }
     
+    /**
+     * gets users primary key from database
+     * @param user
+     * @return
+     * @throws Exception 
+     */
     @Override
     public int getUserId(User user) throws Exception {
         String query = "SELECT id FROM Users WHERE username = ?;";
@@ -71,6 +92,13 @@ public class DBUserDao implements UserDao {
         return id;
     }
     
+    /**
+     * Finds user from database tha matches to username and password
+     * @param username
+     * @param password
+     * @return
+     * @throws Exception 
+     */
     @Override
     public User findByUsername(String username, String password) throws Exception {
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";        
@@ -92,6 +120,12 @@ public class DBUserDao implements UserDao {
         return null;
     }
     
+    /**
+     * Counts average grade of completed courses
+     * @param user
+     * @return
+     * @throws Exception 
+     */
     public double getAverage(User user) throws Exception {
         int id = getUserId(user);
         ArrayList<Integer> list = new ArrayList();
@@ -113,6 +147,12 @@ public class DBUserDao implements UserDao {
         return total / list.size();
     }
     
+    /**
+     * Counts total completed credits
+     * @param user
+     * @return
+     * @throws Exception 
+     */
     public double getCredits(User user) throws Exception {
         int id = getUserId(user);
         double credits = 0;

@@ -18,6 +18,10 @@ Sovellus laskee suoritettujen opintopisteiden määrän ja suoritusten keskiarvo
 
 [Arkkitehtuuri](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/arkkitehtuuri.md)
 
+[Käyttöohje](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/kayttoohje.md)
+
+[Testausdokumentti](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/testaus.md)
+
 ### Komentorivitoiminnot
 
 Sovellus käynnistetään komentoriviltä komennolla:

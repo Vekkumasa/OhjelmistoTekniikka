@@ -58,7 +58,7 @@ public class UI extends Application {
     }
     
     /**
-     * Checks that input in textfield is integer and between min and max value
+     * Checks that input in textfield is integer and between 1 and max (5 or 30) value
      * @param text
      * @param min
      * @param max

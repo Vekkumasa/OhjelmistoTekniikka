@@ -127,6 +127,12 @@ public class Service {
         return b;
     }
     
+    /**
+     * 
+     * @param course
+     * @param user
+     * @return True if course was deleted succesfully false if not
+     */
     public boolean deleteCourse(Course course, User user) {
         try {
             courseDao.deleteCourse(course, user);
@@ -137,6 +143,11 @@ public class Service {
         return true;
     }
     
+    /**
+     * 
+     * @param user
+     * @return Average grade from completed courses
+     */
     public double getUserAverage(User user) {
         double avg = 0;
         try {
@@ -147,6 +158,11 @@ public class Service {
         return avg;
     }
     
+    /**
+     * 
+     * @param user
+     * @return Returns users total credits from completed courses
+     */
     public double getUserCredits(User user) {
         double credits = 0;
         try {
