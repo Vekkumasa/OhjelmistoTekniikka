@@ -10,6 +10,8 @@ Sovellus laskee suoritettujen opintopisteiden määrän ja suoritusten keskiarvo
 
 [1. Release](https://github.com/Vekkumasa/OhjelmistoTekniikka/releases/tag/viikko5)
 
+[Lopullinen](https://github.com/Vekkumasa/OhjelmistoTekniikka/releases/tag/Viikko7)
+
 ### Dokumentaatio
 
 [Määrittely](https://github.com/Vekkumasa/OhjelmistoTekniikka/blob/master/dokumentointi/maarittely.md)

@@ -42,6 +42,7 @@ public class UI extends Application {
     
     private VBox vboxCourses;
     private Label dataLabel;
+    private Label nameLabel;
     
     private DecimalFormat df2;
     private BackgroundFill bf;
@@ -52,6 +53,7 @@ public class UI extends Application {
         DBCourseDao courseDao = new DBCourseDao(userDao, "jdbc:h2:./studies");
         service = new Service(userDao, courseDao);
         dataLabel = new Label("");
+        nameLabel = new Label("");
         df2 = new DecimalFormat("#.##");
         bf = new BackgroundFill(Color.ANTIQUEWHITE, new CornerRadii(1),
          new Insets(0.0, 0.0, 0.0, 0.0));
@@ -106,7 +108,8 @@ public class UI extends Application {
                     + course.getCompletionDate().getDayOfMonth()
                     + "." + course.getCompletionDate().getMonthOfYear() 
                     + "." + course.getCompletionDate().getYear());
-            box.getChildren().addAll(label, spacer, delete, notification);
+            box.setHgrow(delete, Priority.ALWAYS);
+            box.getChildren().addAll(label, spacer, delete);
             delete.setOnAction(e -> {
                 service.deleteCourse(course, service.getUser());
                 redrawList();
@@ -159,8 +162,6 @@ public class UI extends Application {
     @Override
     public void start(Stage window) {  
         
-        //logged user label
-        Label nameLabel = new Label();
         
         // login scene
         
